@@ -48,7 +48,7 @@ async function gameLogic() {
   });
   DOMSelectors.ai.insertAdjacentHTML(
     "afterbegin",
-    `<div id="ai-card"><img src="${ai_card.image}" alt=""><p>${ai_card.value}</p></div>`
+    `<div id="ai-card"><img src="${ai_card.image}" alt="${ai_card.value}"></div>`
   );
   console.log(ai_card.image);
   if (Number(user_card.value) > Number(ai_card.value)) {
@@ -60,7 +60,6 @@ async function gameLogic() {
 
     win == false;
   }
-
   i += 2;
 }
 gameLogic();
