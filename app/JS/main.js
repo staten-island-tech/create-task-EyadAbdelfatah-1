@@ -1,7 +1,7 @@
 import "./style.css";
 const DOMSelectors = {
   ai: document.querySelector("#ai"),
-  user: document.querySelector("#user")
+  user: document.querySelector("#user"),
 };
 async function drawCard() {
   try {
@@ -14,8 +14,10 @@ async function drawCard() {
     response = await fetch(
       `https://deckofcardsapi.com/api/deck/${id}/draw/?count=52`
     );
+
     console.log(`https://deckofcardsapi.com/api/deck/${id}/draw/?count=52`);
     result = await response.json();
+    console.log(result);
     return result;
   } catch (error) {}
 }
@@ -33,7 +35,7 @@ async function gameLogic() {
   let user_card = deck.cards[i];
   let ai_card = deck.cards[i + 1];
 
-  deck.cards.forEach(card => {
+  deck.cards.forEach((card) => {
     if (card.value === "JACKS") {
       card.value = 11;
     } else if (card.value === "QUEEN") {
