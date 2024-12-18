@@ -1,7 +1,7 @@
 import "./style.css";
 const DOMSelectors = {
-  ai: document.querySelector("#ai"),
-  user: document.querySelector("#user"),
+  card: document.querySelector("#card"),
+  result: document.querySelector("#result"),
 };
 async function drawCard() {
   try {
@@ -46,14 +46,15 @@ async function gameLogic() {
       card.value = 1;
     }
   });
-  DOMSelectors.ai.insertAdjacentHTML(
+  DOMSelectors.card.insertAdjacentHTML(
     "afterbegin",
-    `<div id="ai-card"><img src="${ai_card.image}" alt="${ai_card.value}"></div>`
+    `<div id="ai-card"><h2>This is you opponents card</h2><img src="${ai_card.image}" alt="${ai_card.value}"></div>
+    <div id="ai-card"><h2>This is your card</h2><img src="${user_card.image}" alt="${user_card.value}"></div>`
   );
-  console.log(ai_card.image);
+
   if (Number(user_card.value) > Number(ai_card.value)) {
     user_card_count++;
-
+    DOMSelectors.result.insertAdjacentHTML("beforeend", `<h2>You win</h2>`);
     win == true;
   } else {
     ai_card_count++;
@@ -66,7 +67,6 @@ gameLogic();
 
 function betting(user_bet) {
   if (user_balance < bet || bet != Number) {
-    console.log("Please bet less/bet a valid number");
   } else if (user_balance > bet || bet == Number) {
     if (win == true) {
       user_balance += user_bet;
