@@ -36,7 +36,7 @@ async function gameLogic() {
   let ai_card = deck.cards[i + 1];
 
   deck.cards.forEach((card) => {
-    if (card.value === "JACKS") {
+    if (card.value === "JACK") {
       card.value = 11;
     } else if (card.value === "QUEEN") {
       card.value = 12;
@@ -54,11 +54,17 @@ async function gameLogic() {
 
   if (Number(user_card.value) > Number(ai_card.value)) {
     user_card_count++;
-    DOMSelectors.result.insertAdjacentHTML("beforeend", `<h2>You win</h2>`);
+    DOMSelectors.result.insertAdjacentHTML(
+      "beforeend",
+      `<h2 class="">You win</h2>`
+    );
     win == true;
   } else {
     ai_card_count++;
-
+    DOMSelectors.result.insertAdjacentHTML(
+      "beforeend",
+      `<h2 class="">You lose</h2>`
+    );
     win == false;
   }
   i += 2;
