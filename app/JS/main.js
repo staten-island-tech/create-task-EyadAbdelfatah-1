@@ -77,6 +77,7 @@ function betting(user_bet) {
   console.log("bjhsrg");
   let user_balance = 0;
   let ai_balance = 0;
+
   if (user_balance < bet || bet != Number) {
   } else if (user_balance > bet || bet == Number) {
     if (win == true) {
