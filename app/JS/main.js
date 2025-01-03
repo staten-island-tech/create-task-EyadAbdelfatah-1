@@ -2,6 +2,8 @@ import "./style.css";
 const DOMSelectors = {
   card: document.querySelector("#card"),
   result: document.querySelector("#result"),
+  bet: document.querySelector("#search-input"),
+  bet_button: document.querySelector("#submit"),
 };
 async function drawCard() {
   try {
@@ -15,26 +17,12 @@ async function drawCard() {
       `https://deckofcardsapi.com/api/deck/${id}/draw/?count=52`
     );
 
-    console.log(`https://deckofcardsapi.com/api/deck/${id}/draw/?count=52`);
     result = await response.json();
-    console.log(result);
+
     return result;
   } catch (error) {}
 }
-
-async function gameLogic() {
-  let user_card_count = 0;
-  let ai_card_count = 0;
-  let i = 0;
-  let user_balance = 0;
-  let ai_balance = 0;
-
-  let win;
-  let deck = await drawCard();
-
-  let user_card = deck.cards[i];
-  let ai_card = deck.cards[i + 1];
-
+async function convert(deck) {
   deck.cards.forEach((card) => {
     if (card.value === "JACK") {
       card.value = 11;
@@ -46,6 +34,20 @@ async function gameLogic() {
       card.value = 1;
     }
   });
+}
+async function gameLogic() {
+  let user_card_count = 0;
+  let ai_card_count = 0;
+  let i = 0;
+
+  let win;
+
+  let deck = await drawCard();
+  convert(deck);
+
+  let user_card = deck.cards[i];
+  let ai_card = deck.cards[i + 1];
+
   DOMSelectors.card.insertAdjacentHTML(
     "afterbegin",
     `<div id="ai-card"><h2>This is you opponents card</h2><img src="${ai_card.image}" alt="${ai_card.value}"></div>
@@ -58,20 +60,23 @@ async function gameLogic() {
       "beforeend",
       `<h2 class="">You win</h2>`
     );
-    win == true;
+    win = true;
   } else {
     ai_card_count++;
     DOMSelectors.result.insertAdjacentHTML(
       "beforeend",
       `<h2 class="">You lose</h2>`
     );
-    win == false;
+    win = false;
   }
   i += 2;
 }
 gameLogic();
 
 function betting(user_bet) {
+  console.log("bjhsrg");
+  let user_balance = 0;
+  let ai_balance = 0;
   if (user_balance < bet || bet != Number) {
   } else if (user_balance > bet || bet == Number) {
     if (win == true) {
@@ -83,3 +88,7 @@ function betting(user_bet) {
     }
   }
 }
+DOMSelectors.bet_button.addEventListener("click", function () {
+  event.preventDefault();
+  betting();
+});
