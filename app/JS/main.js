@@ -79,7 +79,7 @@ async function gameLogic() {
     return win;
   }
 }
-
+let x;
 function betting(user_bet, win) {
   console.log("bjhsrg");
   let user_balance = 100;
@@ -95,7 +95,8 @@ function betting(user_bet, win) {
       user_balance -= user_bet;
     }
   }
-  gameLogic();
+  x = gameLogic();
+  console.log(x);
   console.log(user_balance);
 }
 DOMSelectors.bet_button.addEventListener("click", function () {
