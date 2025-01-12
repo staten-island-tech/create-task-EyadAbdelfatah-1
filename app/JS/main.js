@@ -113,7 +113,7 @@ function betting(user_bet) {
       `<h2>no more money</h2> <button class="btn btn-secondary"id="reset">Reset</button>`
     );
     return;
-  } else if (ai_balance == 0) {
+  } else if (ai_balance <= 0) {
     DOMSelectors.card.innerHTML = "";
     DOMSelectors.result.innerHTML = "";
     DOMSelectors.bet_button.remove();
