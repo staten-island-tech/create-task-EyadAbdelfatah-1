@@ -21,11 +21,11 @@ async function drawCard() {
 
     return result;
   } catch (error) {
-    console.error("The API didnt work", error);
-    return null;
+
   }
 }
-function convert(deck) {
+async function convert() {
+  let deck = await drawCard()
   deck.cards.forEach(card => {
     if (card.value === "JACK") {
       card.value = 11;
@@ -37,17 +37,19 @@ function convert(deck) {
       card.value = 1;
     }
   });
+  return deck;
 }
+let i = 0;
+let convertedDeck = await convert()
 async function gameLogic() {
-  let i = 0;
+  
 
   let win;
 
-  let deck = await drawCard();
-  convert(deck);
+  
 
-  let user_card = deck.cards[i];
-  let ai_card = deck.cards[i + 1];
+  let user_card = convertedDeck.cards[i];
+  let ai_card = convertedDeck.cards[i + 1];
 
   DOMSelectors.card.insertAdjacentHTML(
     "afterbegin",
@@ -98,8 +100,9 @@ function betting(user_bet, win) {
     }
   }
 }
-DOMSelectors.bet_button.addEventListener("click", async function(event) {
+DOMSelectors.bet_button.addEventListener("click",  function(event) {
   event.preventDefault();
-  const x = await gameLogic();
+  const x =  gameLogic();
   betting(DOMSelectors.bet.value, x);
+  i+=2
 });
