@@ -3,7 +3,7 @@ const DOMSelectors = {
   card: document.querySelector("#card"),
   result: document.querySelector("#result"),
   bet: document.querySelector("#search-input"),
-  bet_button: document.querySelector("#submit"),
+  bet_button: document.querySelector("#submit")
 };
 async function drawCard() {
   try {
@@ -22,15 +22,14 @@ async function drawCard() {
     return result;
   } catch (error) {
     console.error("The API didnt work", error);
-    return null; 
+    return null;
   }
 }
 
 async function convert() {
-
   let deck = await drawCard();
 
-  deck.cards.forEach((card) => {
+  deck.cards.forEach(card => {
     if (card.value === "JACK") {
       card.value = 11;
     } else if (card.value === "QUEEN") {
@@ -44,13 +43,11 @@ async function convert() {
   return deck;
 }
 
-let convertedDeck = await convert();
-
 let i = 0;
-function gameLogic() {
-
+async function gameLogic() {
+  let convertedDeck = await convert();
   let win;
-  console.log("gamelogic")
+  console.log("gamelogic");
   let user_card = convertedDeck.cards[i];
   let ai_card = convertedDeck.cards[i + 1];
   i += 2;
@@ -91,10 +88,7 @@ function betting(user_bet, win) {
   console.log(user_bet);
   user_bet = Number(user_bet);
   console.log(typeof user_bet);
-  if (isNaN(user_bet) || user_bet <= 0) {
-    console.log("Invalid bet");
-    return;
-  }
+
   if (user_balance < user_bet) {
     console.log("unc");
   } else if (user_balance >= user_bet) {
@@ -110,7 +104,7 @@ function betting(user_bet, win) {
   }
   console.log(user_balance);
 }
-DOMSelectors.bet_button.addEventListener("click", async function (event) {
+DOMSelectors.bet_button.addEventListener("click", async function(event) {
   event.preventDefault();
   const x = await gameLogic();
   betting(DOMSelectors.bet.value, x);
