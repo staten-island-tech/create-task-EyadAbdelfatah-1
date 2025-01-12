@@ -21,11 +21,13 @@ async function drawCard() {
 
     return result;
   } catch (error) {
-    console.log("the api is poopy");
+    console.error("The API didnt work", error);
+    return null; 
   }
 }
 
 async function convert() {
+
   let deck = await drawCard();
 
   deck.cards.forEach((card) => {
@@ -41,12 +43,14 @@ async function convert() {
   });
   return deck;
 }
+
 let convertedDeck = await convert();
+
 let i = 0;
-async function gameLogic() {
+function gameLogic() {
 
   let win;
-
+  console.log("gamelogic")
   let user_card = convertedDeck.cards[i];
   let ai_card = convertedDeck.cards[i + 1];
   i += 2;
@@ -87,6 +91,10 @@ function betting(user_bet, win) {
   console.log(user_bet);
   user_bet = Number(user_bet);
   console.log(typeof user_bet);
+  if (isNaN(user_bet) || user_bet <= 0) {
+    console.log("Invalid bet");
+    return;
+  }
   if (user_balance < user_bet) {
     console.log("unc");
   } else if (user_balance >= user_bet) {
