@@ -25,10 +25,7 @@ async function drawCard() {
     return null;
   }
 }
-
-async function convert() {
-  let deck = await drawCard();
-
+function convert(deck) {
   deck.cards.forEach(card => {
     if (card.value === "JACK") {
       card.value = 11;
@@ -40,18 +37,18 @@ async function convert() {
       card.value = 1;
     }
   });
-  return deck;
 }
-
-let i = 0;
 async function gameLogic() {
-  let convertedDeck = await convert();
+  let i = 0;
+
   let win;
-  console.log("gamelogic");
-  let user_card = convertedDeck.cards[i];
-  let ai_card = convertedDeck.cards[i + 1];
-  i += 2;
-  console.log(convertedDeck);
+
+  let deck = await drawCard();
+  convert(deck);
+
+  let user_card = deck.cards[i];
+  let ai_card = deck.cards[i + 1];
+
   DOMSelectors.card.insertAdjacentHTML(
     "afterbegin",
     `<div id="ai-card"><h2>This is you opponents card</h2><img src="${ai_card.image}" alt="${ai_card.value}"></div>
@@ -87,8 +84,6 @@ let ai_balance = 100;
 function betting(user_bet, win) {
   console.log(user_bet);
   user_bet = Number(user_bet);
-  console.log(typeof user_bet);
-
   if (user_balance < user_bet) {
     console.log("unc");
   } else if (user_balance >= user_bet) {
@@ -102,7 +97,6 @@ function betting(user_bet, win) {
       user_balance -= user_bet;
     }
   }
-  console.log(user_balance);
 }
 DOMSelectors.bet_button.addEventListener("click", async function(event) {
   event.preventDefault();
