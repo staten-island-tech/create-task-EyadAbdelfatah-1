@@ -57,10 +57,14 @@ async function gameLogic() {
 }
 gameLogic();
 
-function betting(user_bet) {
-  if (user_balance < bet || bet != Number) {
-    console.log("Please bet less/bet a valid number");
-  } else if (user_balance > bet || bet == Number) {
+let user_balance = 100;
+let ai_balance = 100;
+function betting(user_bet, win) {
+  console.log(user_bet);
+  user_bet = Number(user_bet);
+  if (user_balance < user_bet) {
+    console.log("unc");
+  } else if (user_balance >= user_bet) {
     if (win == true) {
       user_balance += user_bet;
       ai_balance -= user_bet;
