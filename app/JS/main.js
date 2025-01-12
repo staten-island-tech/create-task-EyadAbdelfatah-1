@@ -19,21 +19,9 @@ async function drawCard() {
     return result;
   } catch (error) {}
 }
-
-async function gameLogic() {
-  let user_win_count = 0;
-  let ai_win_count = 0;
-
-  let user_balance = 0;
-  let ai_balance = 0;
-
-  let deck = await drawCard();
-
-  let user_card = deck.cards[i];
-  let ai_card = deck.cards[i + 1];
-
+function convert(deck) {
   deck.cards.forEach(card => {
-    if (card.value === "JACKS") {
+    if (card.value === "JACK") {
       card.value = 11;
     } else if (card.value === "QUEEN") {
       card.value = 12;
@@ -43,7 +31,19 @@ async function gameLogic() {
       card.value = 1;
     }
   });
-  DOMSelectors.ai.insertAdjacentHTML(
+}
+async function gameLogic() {
+  let i = 0;
+
+  let win;
+
+  let deck = await drawCard();
+  convert(deck);
+
+  let user_card = deck.cards[i];
+  let ai_card = deck.cards[i + 1];
+
+  DOMSelectors.card.insertAdjacentHTML(
     "afterbegin",
     `<div id="ai-card"><img src="${ai_card.image}" alt=""><p>${ai_card.value}</p></div>`
   );
