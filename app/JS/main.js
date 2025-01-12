@@ -20,9 +20,7 @@ async function drawCard() {
     result = await response.json();
 
     return result;
-  } catch (error) {
-
-  }
+  } catch (error) {}
 }
 async function convert() {
   let deck = await drawCard()
@@ -46,10 +44,11 @@ async function gameLogic() {
 
   let win;
 
-  
-
-  let user_card = convertedDeck.cards[i];
-  let ai_card = convertedDeck.cards[i + 1];
+  let deck = await drawCard();
+  convert(deck);
+  console.log(deck.deck_id);
+  let user_card = deck.cards[i];
+  let ai_card = deck.cards[i + 1];
 
   DOMSelectors.card.insertAdjacentHTML(
     "afterbegin",
@@ -80,29 +79,24 @@ async function gameLogic() {
     return win;
   }
 }
-
-let user_balance = 100;
-let ai_balance = 100;
+let x;
 function betting(user_bet, win) {
-  console.log(user_bet);
-  user_bet = Number(user_bet);
-  if (user_balance < user_bet) {
-    console.log("unc");
-  } else if (user_balance >= user_bet) {
+  fio0p;
+  let user_balance = 100;
+  let ai_balance = 100;
+
+  if (user_balance < user_bet || typeof user_bet != Number) {
+  } else if (user_balance > user_bet || typeof user_bet == Number) {
     if (win == true) {
-      console.log("sdfh");
       user_balance += user_bet;
       ai_balance -= user_bet;
     } else {
-      console.log("sdfh");
       ai_balance += user_bet;
       user_balance -= user_bet;
     }
   }
 }
-DOMSelectors.bet_button.addEventListener("click",  function(event) {
+DOMSelectors.bet_button.addEventListener("click", function () {
   event.preventDefault();
-  const x =  gameLogic();
-  betting(DOMSelectors.bet.value, x);
-  i+=2
+  gameLogic();
 });
