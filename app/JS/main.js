@@ -35,20 +35,17 @@ async function convert() {
       card.value = 1;
     }
   });
-  return deck;
+  return deck
 }
 let i = 0;
 let convertedDeck = await convert()
-async function gameLogic() {
+function gameLogic() {
   
 
   let win;
 
-  let deck = await drawCard();
-  convert(deck);
-  console.log(deck.deck_id);
-  let user_card = deck.cards[i];
-  let ai_card = deck.cards[i + 1];
+  let user_card = convertedDeck.cards[i];
+  let ai_card = convertedDeck.cards[i + 1];
 
   DOMSelectors.card.insertAdjacentHTML(
     "afterbegin",
@@ -79,9 +76,9 @@ async function gameLogic() {
     return win;
   }
 }
-let x;
+
 function betting(user_bet, win) {
-  fio0p;
+
   let user_balance = 100;
   let ai_balance = 100;
 
